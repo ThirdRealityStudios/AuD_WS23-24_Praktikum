@@ -1,1 +1,1 @@
-# AuD_WS23-24_Praktikum
+# AuD WS23/24 Praktikum
