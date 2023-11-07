@@ -7,9 +7,9 @@
       "request": "launch",
       "args": [],
       "stopAtEntry": false,
-      "externalConsole": false,
-      "cwd": "/home/dev/Documents/GIt/AuD/Praktikum/AuD_WS23-24_Praktikum/.vscode",
-      "program": "/home/dev/Documents/GIt/AuD/Praktikum/AuD_WS23-24_Praktikum/.vscode/build/Debug/outDebug",
+      "externalConsole": true,
+      "cwd": "c:/Users/Konto/Documents/OneDrive/Code/Projekte/AuD_WS23-24_Praktikum/AuD_WS23-24_Praktikum",
+      "program": "c:/Users/Konto/Documents/OneDrive/Code/Projekte/AuD_WS23-24_Praktikum/AuD_WS23-24_Praktikum/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
