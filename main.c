@@ -158,12 +158,14 @@ void testFillRandom()
 
 int main()
 {
-    #if DEBUG
+    #if DEBUG // Alle wichtigen Units hier testen:
     testAlloc();
     testFillAscending();
     testFillDescending();
     testFillRandom();
     #endif
+
+    
 
     return EXIT_SUCCESS;
 }
