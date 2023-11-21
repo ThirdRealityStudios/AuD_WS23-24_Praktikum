@@ -3,6 +3,12 @@
 #include <time.h>
 #include <assert.h>
 #include <string.h>
+#include "sort/heapSort.h"
+#include "sort/insertionSort.h"
+#include "sort/mergeSort.h"
+#include "sort/quickSort.h"
+#include "sort/selectionSort.h"
+#include "sort/shellSort.h"
 
 #define VALUES 3 // Größe des zu erstellenden Arrays.
 #define MAX_RAND_VALUE 200000 // Maximal generierter Zufallswert.
@@ -154,6 +160,8 @@ void testFillRandom()
 
     puts("");
 }
+
+// TODO Unit Tests hinzufügen für alle Sortieralgorithmen.
 #endif
 
 int main()
@@ -165,7 +173,7 @@ int main()
     testFillRandom();
     #endif
 
-    
+
 
     return EXIT_SUCCESS;
 }
