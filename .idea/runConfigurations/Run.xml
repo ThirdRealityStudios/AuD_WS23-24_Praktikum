@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AuD_WS23-24_Praktikum" TARGET_NAME="main.c" CONFIG_NAME="Run">
+    <option name="compilerOptions" value="&quot;./sort/heapSort.c&quot; &quot;./sort/insertionSort.c&quot; &quot;./sort/quickSort.c&quot; &quot;./sort/selectionSort.c&quot; &quot;./sort/mergeSort.c&quot; &quot;./sort/shellSort.c&quot;" />
+    <option name="sourceFile" value="C:\Users\Konto\Documents\OneDrive\Code\Projekte\AuD_WS23-24_Praktikum\AuD_WS23-24_Praktikum\main.c" />
+    <method v="2">
+      <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
+    </method>
+  </configuration>
+</component>

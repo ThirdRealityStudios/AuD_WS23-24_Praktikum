@@ -47,6 +47,7 @@
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "files.associations": {
-    "heapsort.h": "c"
+    "heapsort.h": "c",
+    "insertionsort.h": "c"
   }
 }

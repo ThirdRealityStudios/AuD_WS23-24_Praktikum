@@ -1,15 +1,3 @@
-void quicksort (int a[], int l, int r)
-{
-	int i;
-
-	if (r > l)
-	{
-		i = partition (l, r); // TODO implementieren.
-		quicksort (a, l, i-1);
-		quicksort (a, i+1, r);
-	}
-}
-
 int partition (int l, int r)
 {
     // TODO implementieren
@@ -50,5 +38,17 @@ int partition (int l, int r)
 
     */
 
-   return 0;
+    return 0;
+}
+
+void quicksort (int a[], int l, int r)
+{
+	int i;
+
+	if (r > l)
+	{
+		i = partition (l, r); // TODO implementieren.
+		quicksort (a, l, i-1);
+		quicksort (a, i+1, r);
+	}
 }

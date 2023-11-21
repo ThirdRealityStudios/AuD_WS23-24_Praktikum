@@ -10,17 +10,18 @@
 #include "sort/selectionSort.h"
 #include "sort/shellSort.h"
 
-#define VALUES 3 // Größe des zu erstellenden Arrays.
+#define VALUES 200000 // Größe des zu erstellenden Arrays.
 #define MAX_RAND_VALUE 200000 // Maximal generierter Zufallswert.
 
 #define DEBUG 1 // Unit-Tests ausführen und Debug-Infos ausgeben = 1, ansonsten = 0
+#define BRIEF_DEBUG 1 // 1 => alle Einzelheiten ausgeben, falls DEBUG erlaubt ist. Bei 0 normal ausgeben.
 
 #if DEBUG
         #undef VALUES
-        #define VALUES 5 // Nur noch 5 Werte im Testmodus.
+        #define VALUES 6 // Nur noch 6 Werte im Unit-Testmodus statt die Zahl für den Normalfall.
 
         #undef MAX_RAND_VALUE
-        #define MAX_RAND_VALUE 3 // wird zwischen 1 und 3 liegen.
+        #define MAX_RAND_VALUE 3 // Zufallswerte im Unit-Testmodus liegen zwischen 1 und 3.
 #endif
 
 /// @brief Erstellt ein leeres, alloziiertes Array der Größe VALUES.
@@ -89,6 +90,7 @@ void testAlloc()
     assert(array[2] == 0);
     assert(array[3] == 0);
     assert(array[4] == 0);
+    assert(array[5] == 0);
 
     puts("OK");
     
@@ -109,6 +111,7 @@ void testFillAscending()
     assert(array[2] == 3);
     assert(array[3] == 4);
     assert(array[4] == 5);
+    assert(array[5] == 6);
 
     puts("OK");
 
@@ -126,11 +129,12 @@ void testFillDescending()
 
     fillDescending(array);
 
-    assert(array[0] == 5);
-    assert(array[1] == 4);
-    assert(array[2] == 3);
-    assert(array[3] == 2);
-    assert(array[4] == 1);
+    assert(array[0] == 6);
+    assert(array[1] == 5);
+    assert(array[2] == 4);
+    assert(array[3] == 3);
+    assert(array[4] == 2);
+    assert(array[5] == 1);
 
     puts("OK");
 
@@ -153,6 +157,7 @@ void testFillRandom()
     assert(array[2] > 0 && array[2] <= MAX_RAND_VALUE);
     assert(array[3] > 0 && array[3] <= MAX_RAND_VALUE);
     assert(array[4] > 0 && array[4] <= MAX_RAND_VALUE);
+    assert(array[5] > 0 && array[4] <= MAX_RAND_VALUE);
 
     puts("OK");
 
@@ -161,7 +166,54 @@ void testFillRandom()
     puts("");
 }
 
-// TODO Unit Tests hinzufügen für alle Sortieralgorithmen.
+/// @brief Testet den Heap-Sort auf Korrektheit.
+void testHeapSort()
+{
+    puts("testHeapSort()");
+
+    int *array = alloc();
+
+    array[0] = 0; // Unbenutzte Stelle, da Heap Sort ab 1 indiziert.
+    array[1] = 13;
+    array[2] = 12;
+    array[3] = -78;
+    array[4] = 32;
+    array[5] = INT_MIN;
+
+    #if defined(BRIEF_DEBUG) && BRIEF_DEBUG
+    for(int i = 0; i < VALUES; i++)
+    {
+        printf("%d ", array[i]);
+    }
+    #endif
+
+    heapsort(array, VALUES - 1); // 1 abziehen, da Heap Sort ein Feld selber braucht zum Arbeiten.
+
+    #if defined(DEBUG) && DEBUG
+    puts("");
+
+    for(int i = 0; i < VALUES; i++)
+    {
+        printf("%d ", array[i]);
+    }
+
+    puts("");
+    #endif
+
+    assert(array[0] == 0);
+    assert(array[1] == INT_MIN);
+    assert(array[2] == -78);
+    assert(array[3] == 12);
+    assert(array[4] == 13);
+    assert(array[5] == 32);
+
+    puts("OK");
+
+    free(array);
+
+    puts("");
+}
+
 #endif
 
 int main()
@@ -171,9 +223,9 @@ int main()
     testFillAscending();
     testFillDescending();
     testFillRandom();
+
+    testHeapSort();
     #endif
-
-
 
     return EXIT_SUCCESS;
 }

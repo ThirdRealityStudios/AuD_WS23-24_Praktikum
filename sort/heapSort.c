@@ -5,7 +5,7 @@
 
 static int a[MAXN+1], N;
 
-void upheap (int k)
+void heapsort_upheap (int k)
 {
 	int v;
 
@@ -15,13 +15,13 @@ void upheap (int k)
 	a[k] = v;
 }
 
-void insert (int v)
+void heapsort_insert (int v)
 { 
 	a[++N] = v;
-	upheap (N);
+	heapsort_upheap (N);
 }
 
-void downheap (int k)
+void heapsort_downheap (int k)
 {
 	int j, v;
 
@@ -36,12 +36,12 @@ void downheap (int k)
 	a[k] = v;
 }
 
-int remove ()
+int heapsort_remove ()
 {
 	int v = a[1];
 
 	a[1] = a[N--];
-	downheap (1);
+	heapsort_downheap (1);
 	return v;
 }
 
@@ -49,6 +49,6 @@ void heapsort (int a[], int laenge)
 {
 	int k;
 
-	for (k = 1; k <= laenge; k++) insert (a[k]);
-	for (k = laenge; k >= 1; k--) a[k] = remove();
+	for (k = 1; k <= laenge; k++) heapsort_insert (a[k]);
+	for (k = laenge; k >= 1; k--) a[k] = heapsort_remove();
 }
