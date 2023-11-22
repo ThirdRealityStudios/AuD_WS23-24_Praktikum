@@ -334,7 +334,19 @@ void testQuickSort()
     puts("");
 }
 
+/// @brief Gibt ein Array aus der Länge N.
+void printArray(int *array, int N)
+{
+    for(int i = 0; i < N; i++)
+    {
+        printf("%d ", array[i]);
+    }
+
+    puts("");
+}
+
 /// @brief Testet die Funktionalität von ShellSort.
+/// @todo evtl. Shell Sort mit Null-indizieren.
 void testShellSort()
 {
     puts("testShellSort()");
@@ -348,9 +360,17 @@ void testShellSort()
     array[4] = 32;
     array[5] = INT_MIN;
 
+    #if defined(BRIEF_DEBUG) && BRIEF_DEBUG
+    printArray(array, VALUES);
+    #endif
+
     shellsort_sort(array, VALUES - 1);
 
-    assert(array[0] == 0); // array[0] unverändert, da nicht verwendet.
+    #if defined(BRIEF_DEBUG) && BRIEF_DEBUG
+    printArray(array, VALUES);
+    #endif
+
+    assert(array[0] == 0);
     assert(array[1] == INT_MIN);
     assert(array[2] == -78);
     assert(array[3] == 12);
