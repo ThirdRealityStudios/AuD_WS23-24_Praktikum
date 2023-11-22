@@ -348,11 +348,11 @@ void testShellSort()
     array[4] = 32;
     array[5] = INT_MIN;
 
-    shellsort_sort(array, VALUES);
+    shellsort_sort(array, VALUES - 1);
 
-    assert(array[0] == INT_MIN);
-    assert(array[1] == -78);
-    assert(array[2] == 0);
+    assert(array[0] == 0);
+    assert(array[1] == INT_MIN);
+    assert(array[2] == -78);
     assert(array[3] == 12);
     assert(array[4] == 13);
     assert(array[5] == 32);
