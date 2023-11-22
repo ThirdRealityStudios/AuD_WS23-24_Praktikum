@@ -1,44 +1,48 @@
-int quicksort_partition (int l, int r)
+void swap(int array[], int i, int j)
 {
-    // TODO implementieren
+    int copy = array[j];
 
-    /* Pseudocode für partition() aus Wikipedia:
+    array[j] = array[i];
 
- funktion teile(links, rechts)
-     i:= links
-     // Starte mit j links vom Pivotelement
-     j:= rechts - 1
-     pivot:= daten[rechts]
+    array[i] = copy;
+}
 
-     wiederhole solange i < j // solange i an j nicht vorbeigelaufen ist
+int quicksort_partition (int array[], int l, int r)
+{
+    int i = l;
+
+    // Starte mit j links vom Pivotelement
+    int j = r - 1;
+    int pivot = array[r];
+
+    while(i < j) // solange i an j nicht vorbeigelaufen ist
+    {
          // Suche von links ein Element, welches größer als das Pivotelement ist
-         wiederhole solange i < j und daten[i] <= pivot
-             i:= i + 1
-         ende
+         while(i < j && array[i] <= pivot)
+             i++;
 
          // Suche von rechts ein Element, welches kleiner oder gleich dem Pivotelement ist
-         wiederhole solange j > i und daten[j] > pivot
-             j:= j - 1
-         ende
+         while(j > i && array[j] > pivot)
+             j--;
 
-         falls daten[i] > daten[j] dann
-             tausche daten[i] mit daten[j]
-         ende
-     ende
+         if(array[i] > array[j])
+         {
+             swap(array, i, j);
+         }
+    }
 
-        // Tausche Pivotelement (daten[rechts]) mit neuer endgültiger Position (daten[i])
-        // und gib die neue Position des Pivotelements zurück, beende Durchlauf
-        falls daten[i] > pivot dann
-            tausche daten[i] mit daten[rechts]
-        sonst
-            i:= rechts
-        ende
-        antworte i
-    ende
+    // Tausche Pivotelement (daten[rechts]) mit neuer endgültiger Position (daten[i])
+    // und gib die neue Position des Pivotelements zurück, beende Durchlauf
+    if(array[i] > pivot)
+    {
+        swap(array, i, r);
+    }
+    else
+    {
+        i = r;
+    }
 
-    */
-
-    return 0;
+    return i;
 }
 
 void quicksort_sort (int a[], int l, int r)
@@ -47,7 +51,7 @@ void quicksort_sort (int a[], int l, int r)
 
 	if (r > l)
 	{
-		i = quicksort_partition (l, r); // TODO implementieren.
+		i = quicksort_partition (a, l, r); // TODO implementieren.
         quicksort_sort (a, l, i-1);
         quicksort_sort (a, i+1, r);
 	}
