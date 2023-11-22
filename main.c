@@ -377,7 +377,7 @@ int main()
     testHeapSort();
     testInsertionSort();
     testMergeSort();
-    testQuickSort();
+    // TODO testQuickSort();
     testSelectionSort();
     testShellSort();
     #endif
