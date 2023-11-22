@@ -51,7 +51,8 @@ void quicksort_sort (int a[], int l, int r)
 
 	if (r > l)
 	{
-		i = quicksort_partition (a, l, r); // TODO implementieren.
+		i = quicksort_partition (a, l, r);
+
         quicksort_sort (a, l, i-1);
         quicksort_sort (a, i+1, r);
 	}
