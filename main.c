@@ -14,7 +14,7 @@
 #define MAX_RAND_VALUE 200000 // Maximal generierter Zufallswert.
 
 #define DEBUG 1 // Unit-Tests ausführen und Debug-Infos ausgeben = 1, ansonsten = 0
-#define BRIEF_DEBUG 1 // 1 => alle Einzelheiten ausgeben, falls DEBUG erlaubt ist. Bei 0 normal ausgeben.
+#define BRIEF_DEBUG 0 // 1 => alle Einzelheiten ausgeben, falls DEBUG erlaubt ist. Bei 0 normal ausgeben.
 
 #if DEBUG
         #undef VALUES
@@ -189,7 +189,7 @@ void testHeapSort()
 
     heapsort_sort(array, VALUES - 1); // 1 abziehen, da Heap Sort ein Feld selber braucht zum Arbeiten.
 
-    #if defined(DEBUG) && DEBUG
+    #if defined(BRIEF_DEBUG) && BRIEF_DEBUG
     puts("");
 
     for(int i = 0; i < VALUES; i++)
