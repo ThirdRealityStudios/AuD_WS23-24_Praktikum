@@ -4,7 +4,7 @@
 // Vergleich: 1,5,9,13 und 2,6,10,14
 // Letzter Durchlauf: normaler Insertion Sort, kein Element muss weit bewegt werden.
 
-void shellsort (int a[], int N)
+void shellsort_sort (int a[], int N)
 {
 	int i, j, h, v;
 

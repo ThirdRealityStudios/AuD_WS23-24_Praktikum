@@ -1,3 +1,3 @@
 // 6.3: Insertion Sort
 
-void insertion (int a[], int N);
+void insertionsort_sort (int a[], int N);

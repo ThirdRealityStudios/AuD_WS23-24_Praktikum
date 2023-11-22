@@ -45,7 +45,7 @@ int heapsort_remove ()
 	return v;
 }
 
-void heapsort (int a[], int laenge)
+void heapsort_sort (int a[], int laenge)
 {
 	int k;
 

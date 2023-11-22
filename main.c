@@ -173,7 +173,7 @@ void testHeapSort()
 
     int *array = alloc();
 
-    array[0] = 0; // Unbenutzte Stelle, da Heap Sort ab 1 indiziert.
+    array[0] = 0; // Wird nicht benutzt werden von HeapSort, da HeapSort ab 1 indiziert.
     array[1] = 13;
     array[2] = 12;
     array[3] = -78;
@@ -187,7 +187,7 @@ void testHeapSort()
     }
     #endif
 
-    heapsort(array, VALUES - 1); // 1 abziehen, da Heap Sort ein Feld selber braucht zum Arbeiten.
+    heapsort_sort(array, VALUES - 1); // 1 abziehen, da Heap Sort ein Feld selber braucht zum Arbeiten.
 
     #if defined(DEBUG) && DEBUG
     puts("");
@@ -214,6 +214,156 @@ void testHeapSort()
     puts("");
 }
 
+/// @brief Test den Selection Sort auf die korrekte Funktionalität.
+void testSelectionSort()
+{
+    puts("testSelectionSort()");
+
+    int *array = alloc();
+
+    array[0] = 0;
+    array[1] = 13;
+    array[2] = 12;
+    array[3] = -78;
+    array[4] = 32;
+    array[5] = INT_MIN;
+
+    selectionsort_sort(array, VALUES);
+
+    assert(array[0] == INT_MIN);
+    assert(array[1] == -78);
+    assert(array[2] == 0);
+    assert(array[3] == 12);
+    assert(array[4] == 13);
+    assert(array[5] == 32);
+
+    puts("OK");
+
+    free(array);
+
+    puts("");
+}
+
+/// @brief Testet die Funktionalität von InsertionSort.
+void testInsertionSort()
+{
+    puts("testInsertionSort()");
+
+    int *array = alloc();
+
+    array[0] = 0;
+    array[1] = 13;
+    array[2] = 12;
+    array[3] = -78;
+    array[4] = 32;
+    array[5] = INT_MIN;
+
+    insertionsort_sort(array, VALUES);
+
+    assert(array[0] == INT_MIN);
+    assert(array[1] == -78);
+    assert(array[2] == 0);
+    assert(array[3] == 12);
+    assert(array[4] == 13);
+    assert(array[5] == 32);
+
+    puts("OK");
+
+    free(array);
+
+    puts("");
+}
+
+/// @brief Testet die Funktionalität von MergeSort.
+void testMergeSort()
+{
+    puts("testMergeSort()");
+
+    int *array = alloc();
+
+    array[0] = 0;
+    array[1] = 13;
+    array[2] = 12;
+    array[3] = -78;
+    array[4] = 32;
+    array[5] = INT_MIN;
+
+    mergesort_sort(array, 0, VALUES - 1);
+
+    assert(array[0] == INT_MIN);
+    assert(array[1] == -78);
+    assert(array[2] == 0);
+    assert(array[3] == 12);
+    assert(array[4] == 13);
+    assert(array[5] == 32);
+
+    puts("OK");
+
+    free(array);
+
+    puts("");
+}
+
+/// @brief Testet die Funktionalität von QuickSort.
+void testQuickSort()
+{
+    puts("testQuickSort()");
+
+    int *array = alloc();
+
+    array[0] = 0;
+    array[1] = 13;
+    array[2] = 12;
+    array[3] = -78;
+    array[4] = 32;
+    array[5] = INT_MIN;
+
+    quicksort_sort(array, 0, VALUES - 1);
+
+    assert(array[0] == INT_MIN);
+    assert(array[1] == -78);
+    assert(array[2] == 0);
+    assert(array[3] == 12);
+    assert(array[4] == 13);
+    assert(array[5] == 32);
+
+    puts("OK");
+
+    free(array);
+
+    puts("");
+}
+
+/// @brief Testet die Funktionalität von ShellSort.
+void testShellSort()
+{
+    puts("testShellSort()");
+
+    int *array = alloc();
+
+    array[0] = 0;
+    array[1] = 13;
+    array[2] = 12;
+    array[3] = -78;
+    array[4] = 32;
+    array[5] = INT_MIN;
+
+    shellsort_sort(array, VALUES);
+
+    assert(array[0] == INT_MIN);
+    assert(array[1] == -78);
+    assert(array[2] == 0);
+    assert(array[3] == 12);
+    assert(array[4] == 13);
+    assert(array[5] == 32);
+
+    puts("OK");
+
+    free(array);
+
+    puts("");
+}
+
 #endif
 
 int main()
@@ -225,6 +375,11 @@ int main()
     testFillRandom();
 
     testHeapSort();
+    testInsertionSort();
+    testMergeSort();
+    testQuickSort();
+    testSelectionSort();
+    testShellSort();
     #endif
 
     return EXIT_SUCCESS;

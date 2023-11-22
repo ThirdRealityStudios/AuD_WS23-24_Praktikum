@@ -1,4 +1,4 @@
-void selection (int a[], int N)
+void selectionsort_sort (int a[], int N)
 {
 	int i, j, min, t;
 

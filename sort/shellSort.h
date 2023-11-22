@@ -1,3 +1,3 @@
 // 6.7: Shellsort
 
-extern void shellsort (int a[], int N);
+extern void shellsort_sort (int a[], int N);
