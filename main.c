@@ -350,7 +350,7 @@ void testShellSort()
 
     shellsort_sort(array, VALUES - 1);
 
-    assert(array[0] == 0);
+    assert(array[0] == 0); // array[0] unverändert, da nicht verwendet.
     assert(array[1] == INT_MIN);
     assert(array[2] == -78);
     assert(array[3] == 12);
