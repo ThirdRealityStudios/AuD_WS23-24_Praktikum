@@ -45,7 +45,7 @@ int quicksort_partition (int array[], int l, int r)
     return i;
 }
 
-void quicksort_sort (int a[], int l, int r)
+void quicksort_innerSort (int a[], int l, int r)
 {
 	int i;
 
@@ -53,7 +53,12 @@ void quicksort_sort (int a[], int l, int r)
 	{
 		i = quicksort_partition (a, l, r);
 
-        quicksort_sort (a, l, i-1);
-        quicksort_sort (a, i+1, r);
+        quicksort_innerSort (a, l, i-1);
+        quicksort_innerSort (a, i+1, r);
 	}
+}
+
+void quicksort_sort(int a[], int N)
+{
+    quicksort_innerSort(a, 0, N - 1);
 }

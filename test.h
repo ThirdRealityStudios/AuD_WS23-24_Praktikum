@@ -1,3 +1,6 @@
+#ifndef TEST_H
+#define TEST_H
+
 extern void testAlloc();
 extern void testFillAscending();
 extern void testFillDescending();
@@ -9,3 +12,5 @@ extern void testSelectionSort();
 extern void testShellSort();
 extern void testQuickSort();
 extern void testMergeSort();
+
+#endif

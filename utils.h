@@ -4,6 +4,6 @@
 
 int* alloc(int length);
 int* copy(int *array, int length);
-void fillAscending();
-void fillDescending();
-void fillRandom();
+void fillAscending(int *array, int length);
+void fillDescending(int *array, int length);
+void fillRandom(int *array, int length);

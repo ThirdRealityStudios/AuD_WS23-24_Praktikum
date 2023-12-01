@@ -1,7 +1,3 @@
-#ifndef _TEST_H
-#define _TEST_H
-#endif
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
@@ -230,7 +226,7 @@ void testMergeSort()
     array[4] = 32;
     array[5] = INT_MIN;
 
-    mergesort_sort(array, 0, 6 - 1);
+    mergesort_sort(array, 6);
 
     assert(array[0] == INT_MIN);
     assert(array[1] == -78);
@@ -260,7 +256,7 @@ void testQuickSort()
     array[4] = 32;
     array[5] = INT_MIN;
 
-    quicksort_sort(array, 0, 6 - 1);
+    quicksort_sort(array, 6);
 
     assert(array[0] == INT_MIN);
     assert(array[1] == -78);
