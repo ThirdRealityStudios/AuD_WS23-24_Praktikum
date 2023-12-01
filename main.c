@@ -34,11 +34,27 @@ void sortMeasurePrint(void (*algorithm)(int array[], int N), void (*fillFunc)(in
     int *array = alloc(VALUES);
     fillFunc(array, VALUES);
 
-    printf("-> %s: ", orderOfArrayValuesInfo);
-    printf("%lu ms\n", sort(algorithm, array, VALUES));
-    free(array);
+    int *copy = alloc(VALUES);
 
-    return;
+    clock_t avgTime = 0;
+
+    memcpy(copy, array, VALUES); // Save for later.
+
+    printf("-> %s: ", orderOfArrayValuesInfo);
+
+    for(int i = 0; i < 3; i++)
+    {
+        memcpy(array, copy, VALUES); // Load preset array.
+
+        avgTime += sort(algorithm, array, VALUES);
+    }
+
+    avgTime /= 3;
+
+    printf("%li ms on average\n", avgTime);
+
+    free(array);
+    free(copy);
 }
 
 void aufgabe(void (*algorithm)(int array[], int N), char *sortingAlgorithmName)
@@ -66,14 +82,12 @@ int main()
     testShellSort();
     #endif
 
+    aufgabe(quicksort_sort, "Quick Sort");
     aufgabe(heapsort_sort, "Heap Sort");
     aufgabe(selectionsort_sort, "Selection Sort"); // OK
     aufgabe(mergesort_sort, "Merge Sort");
     aufgabe(insertionsort_sort, "Insertion Sort"); // OK
     aufgabe(shellsort_sort, "Shell Sort"); // OK
-    // aufgabe(quicksort_sort, "Quick Sort");
-
-
 
     return EXIT_SUCCESS;
 }
