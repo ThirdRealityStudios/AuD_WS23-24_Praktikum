@@ -164,24 +164,6 @@ int splitIfNeeded(Node *node)
     return INT_MIN; // No split applied
 }
 
-Node* findLeafForKey(Node *node, int key)
-{
-    if(hasNoChildren(node))
-    {
-        // Leaf found.
-        return node;
-    }
-
-    if(key < node -> key[0])
-    {
-        // take left node
-        return findLeafForKey(node -> children[0], key);
-    }
-
-    // take right node
-    return findLeafForKey(node -> children[1], key);
-}
-
 Node* lastChild(Node *node)
 {
     if(node -> children[0] != NULL &&
@@ -217,6 +199,24 @@ Node* lastChild(Node *node)
     }
 
     return NULL;
+}
+
+Node* findLeafForKey(Node *node, int key)
+{
+    if(hasNoChildren(node))
+    {
+        // Leaf found.
+        return node;
+    }
+
+    if(key < node -> key[0])
+    {
+        // take left node
+        return findLeafForKey(node -> children[0], key);
+    }
+
+    // take right node
+    return findLeafForKey(lastChild(node), key);
 }
 
 void insertAtNode(Node *node, int key)
