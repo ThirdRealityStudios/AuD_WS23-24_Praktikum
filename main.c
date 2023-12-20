@@ -110,9 +110,9 @@ int main()
 
     insert(&root, 7);
 
-    /*
     insert(&root, 6);
 
+    /*
     // print2_3_4_tree(root, 1);
 
     // print2_3_4_tree(root, 1);

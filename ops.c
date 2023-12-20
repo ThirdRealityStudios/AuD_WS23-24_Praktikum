@@ -103,7 +103,7 @@ void insertInternally(Node *node, int key)
     sortKeys(node);
 }
 
-Node *newParent = NULL;
+Node *newParent = NULL, *newLeftChild = NULL;
 
 int splitIfNeeded(Node *node)
 {
@@ -113,7 +113,7 @@ int splitIfNeeded(Node *node)
     {
         if(hasNoChildren(node))
         {
-            Node *newLeftChild = createNode();
+            newLeftChild = createNode();
             Node *newRightChild = createNode();
 
             keysToNewChildren(newLeftChild, newRightChild, node);
@@ -245,7 +245,7 @@ void insertAtNode(Node *node, int key)
             // if splitting up changed the node we want to continue looking at for insertion (old node does not exist anymore).
             if(node != newParent)
             {
-                insertInternally(newParent -> children[0], key);
+                insertInternally(newLeftChild, key);
             }
             else
             {
