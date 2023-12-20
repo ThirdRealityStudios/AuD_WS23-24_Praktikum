@@ -104,11 +104,11 @@ int main()
     insert(&root, 5);
     insert(&root, 4);
     insert(&root, 2);
-
     insert(&root, 9);
 
-    /*
     insert(&root, 10);
+
+    /*
     insert(&root, 8);
     insert(&root, 7);
     insert(&root, 6);

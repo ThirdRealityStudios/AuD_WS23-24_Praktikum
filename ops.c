@@ -95,45 +95,73 @@ int hasNoChildren(Node *node)
               && node -> children[3] == NULL;
 }
 
-int splitIfNeeded(Node *node)
-{
-    if(isNodeFull(node))
-    {
-        Node *parent = node;
-
-        if(hasNoChildren(parent))
-        {
-            Node *newLeftChild = createNode();
-            Node *newRightChild = createNode();
-
-            keysToNewChildren(newLeftChild, newRightChild, parent);
-
-            parent -> children[0] = newLeftChild;
-            parent -> children[1] = newRightChild;
-
-            newLeftChild -> parent = parent;
-            newRightChild -> parent = parent;
-
-            // Delete children keys from parent
-            parent -> key[0] = parent -> key[1]; // middle key on first place now
-            parent -> key[1] = 0;
-            parent -> key[2] = 0;
-            parent -> key[3] = 0;
-            parent -> num_keys = 1;
-
-            return parent -> key[0]; // Middle key used to split
-        }
-    }
-
-    return INT_MIN; // No split applied
-}
-
 void insertInternally(Node *node, int key)
 {
     node -> key[node -> num_keys] = key;
     node -> num_keys++;
 
     sortKeys(node);
+}
+
+Node *newParent = NULL;
+
+int splitIfNeeded(Node *node)
+{
+    newParent = node; // default if nothing happens inside this function.
+
+    if(isNodeFull(node))
+    {
+        if(hasNoChildren(node))
+        {
+            Node *newLeftChild = createNode();
+            Node *newRightChild = createNode();
+
+            keysToNewChildren(newLeftChild, newRightChild, node);
+
+            Node *parent = (node -> parent == NULL) ? node : node -> parent;
+
+            newParent = parent;
+
+            // Make sure not to overwrite existing children
+            if(parent -> children[0] != NULL &&
+               parent -> children[1] != NULL &&
+               parent -> children[2] == NULL &&
+               parent -> children[3] == NULL)
+            {
+                parent -> children[1] = newLeftChild;
+                parent -> children[2] = newRightChild;
+            }
+            else
+            {
+                parent -> children[0] = newLeftChild;
+                parent -> children[1] = newRightChild;
+            }
+
+            newLeftChild -> parent = parent;
+            newRightChild -> parent = parent;
+
+            int middleKey = node -> key[1];
+
+            if(node != parent)
+            {
+                // Copy middle key up to parent
+                insertInternally(parent, middleKey);
+            }
+            else // Otherwise clear everything because other keys than middleKey have been copied to their corresponding children
+            {
+                parent -> key[0] = 0;
+                parent -> key[1] = 0;
+                parent -> key[2] = 0;
+                parent -> num_keys = 0;
+
+                insertInternally(parent, middleKey);
+            }
+
+            return middleKey; // Middle key used to split
+        }
+    }
+
+    return INT_MIN; // No split applied
 }
 
 Node* findLeafForKey(Node *node, int key)
@@ -154,6 +182,43 @@ Node* findLeafForKey(Node *node, int key)
     return findLeafForKey(node -> children[1], key);
 }
 
+Node* lastChild(Node *node)
+{
+    if(node -> children[0] != NULL &&
+       node -> children[1] == NULL &&
+       node -> children[2] == NULL &&
+       node -> children[3] == NULL)
+    {
+        return node -> children[0];
+    }
+
+    if(node -> children[0] != NULL &&
+       node -> children[1] != NULL &&
+       node -> children[2] == NULL &&
+       node -> children[3] == NULL)
+    {
+        return node -> children[1];
+    }
+
+    if(node -> children[0] != NULL &&
+       node -> children[1] != NULL &&
+       node -> children[2] != NULL &&
+       node -> children[3] == NULL)
+    {
+        return node -> children[2];
+    }
+
+    if(node -> children[0] != NULL &&
+       node -> children[1] != NULL &&
+       node -> children[2] != NULL &&
+       node -> children[3] != NULL)
+    {
+        return node -> children[3];
+    }
+
+    return NULL;
+}
+
 void insertAtNode(Node *node, int key)
 {
     int splitValue = INT_MIN;
@@ -168,18 +233,36 @@ void insertAtNode(Node *node, int key)
 
         if(key < splitValue)
         {
-            insertInternally(parent -> children[0], key);
+            // if splitting up changed the node we want to continue looking at for insertion (old node does not exist anymore).
+            if(node != newParent)
+            {
+                insertInternally(newParent -> children[0], key);
+            }
+            else
+            {
+                insertInternally(parent -> children[0], key);
+            }
         }
         else
         {
-            insertInternally(parent -> children[1], key);
+            if(node != newParent)
+            {
+                insertInternally(lastChild(newParent), key);
+            }
+            else
+            {
+                insertInternally(lastChild(parent), key);
+            }
         }
     }
     else // Normal insertion to the key array but first traverse to the required node
     {
         Node *leaf = findLeafForKey(node, key);
 
-        insertInternally(leaf, key);
+        if(isNodeFull(leaf))
+            insertAtNode(leaf, key); // Splitting needed
+        else
+            insertInternally(leaf, key);
     }
 }
 
