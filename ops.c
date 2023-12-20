@@ -131,6 +131,15 @@ int splitIfNeeded(Node *node)
                 parent -> children[1] = newLeftChild;
                 parent -> children[2] = newRightChild;
             }
+            // Make sure not to overwrite existing children
+            else if(parent -> children[0] != NULL &&
+                    parent -> children[1] != NULL &&
+                    parent -> children[2] != NULL &&
+                    parent -> children[3] == NULL)
+            {
+                parent -> children[2] = newLeftChild;
+                parent -> children[3] = newRightChild;
+            }
             else
             {
                 parent -> children[0] = newLeftChild;

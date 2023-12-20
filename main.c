@@ -106,11 +106,11 @@ int main()
     insert(&root, 2);
     insert(&root, 9);
     insert(&root, 10);
-
     insert(&root, 8);
 
-    /*
     insert(&root, 7);
+
+    /*
     insert(&root, 6);
 
     // print2_3_4_tree(root, 1);
