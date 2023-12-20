@@ -1,4 +1,3 @@
-# AuD_WS23-24_Praktikum
+# AuD_WS23-24_Praktikum - Termin 4
 
-Die verschiedenen Termine befinden sich in den entsprechenden Branches
-mit kurzer Aufgabennennung.
+2-3-4 Bäume
