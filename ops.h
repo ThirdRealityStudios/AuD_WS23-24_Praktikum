@@ -15,9 +15,13 @@ typedef struct Node
 } Node;
 
 Node* createNode();
-void insertKey(Node *node, int key);
-void splitNode(Node *node, Node **root);
-void insert2(Node **root, int key);
+void insert(Node **root, int key);
+void insertAtNode(Node *node, int key);
+int splitIfNeeded(Node *node);
+int hasNoChildren(Node *node);
+void keysToNewChildren(Node *newLeftChild, Node *newRightChild, Node *parentNode);
+void sortKeys(Node *node);
+int isNodeFull(Node *node);
 int maxDepth(struct Node* root);
 int countNodes(struct Node* root);
 #endif

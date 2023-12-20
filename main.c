@@ -24,7 +24,7 @@ void insert500Random(struct Node** root)
     {
         int random_num = rand() % 500;
 
-        insert2(root, random_num);
+        insert(root, random_num);
     }
 }
 
@@ -88,32 +88,9 @@ int searchKey(struct Node* root, int target, int* comparisons)
     return 0; // Key not found
 }
 
-int isNodeFull(Node *node)
+void print234Tree(Node *root)
 {
-    return node -> num_keys == 3;
-}
 
-/// @brief Splits a node if it is full of keys (= 3)
-void splitIfNecessary(Node *node)
-{
-    if(!isNodeFull(node))
-    {
-        return;
-    }
-
-    int middleKey = node -> key[1];
-
-    Node *newLeftChild = createNode();
-
-
-}
-
-void insert(Node *node, int key)
-{
-    splitIfNecessary(node);
-
-    node -> key[node -> num_keys - 1] = key;
-    node -> num_keys++;
 }
 
 int main()
@@ -122,18 +99,25 @@ int main()
 
     // insert500Random(&root);
 
-    insert2(&root, 3);
-    insert2(&root, 1);
-    insert2(&root, 5);
-    insert2(&root, 4);
-    insert2(&root, 2);
-    insert2(&root, 9);
-    insert2(&root, 10);
-    insert2(&root, 8);
-    insert2(&root, 7);
-    insert2(&root, 6);
+    insert(&root, 3);
+    insert(&root, 1);
+    insert(&root, 5);
+    insert(&root, 4);
 
-    print2_3_4_tree(root, 1);
+    /*
+    insert(&root, 2);
+    insert(&root, 9);
+    insert(&root, 10);
+    insert(&root, 8);
+    insert(&root, 7);
+    insert(&root, 6);
+     */
+
+    // print2_3_4_tree(root, 1);
+
+    // print2_3_4_tree(root, 1);
+
+    /*
     puts("");
     puts("");
 
@@ -172,6 +156,7 @@ int main()
         }
     }
     while(target != 600);
+     */
 
     return 0;
 }

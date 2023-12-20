@@ -28,170 +28,144 @@ int is4Node(Node* node)
            && node -> children[3] != NULL;
 }
 
-/// @brief Splittet den Knoten auf in zwei, da 4 Schlüssel.
-/// @brief Teilt einen Knoten auf in zwei,
-///        damit jeder nur maximal 3 Schlüssel enthält.
-///        Geht dann rekursiv nach oben im Baum und wiederholt dies
-///        für alle weiteren Knoten,
-///        wo dies zutrifft.
-void split(Node* node)
+int isNodeFull(Node *node)
 {
-    Node *newLeftNode = createNode();
-
-    newLeftNode -> key[0] = node -> key[0];
-    newLeftNode -> num_keys++;
-    newLeftNode -> children[0] = node -> children[0];
-    newLeftNode -> children[1] = node -> children[1];
-
-    Node *newRightNode = createNode();
-
-    newRightNode -> key[0] = node -> key[1];
-    newRightNode -> num_keys++;
-    newRightNode -> children[0] = node -> children[2];
-    newRightNode -> children[1] = node -> children[3];
-
-    node -> key[0] = node -> key[2]; // mittleren Schlüssel nehmen
-    node -> num_keys = 1;
-    node -> children[0] = newLeftNode;
-    node -> children[1] = newRightNode;
-    node -> children[2] = NULL;
-    node -> children[3] = NULL;
+    return node -> num_keys == 3;
 }
 
-//Schlüssel in einem Knoten einfügen
-void insertKey(Node *node, int key)
+/// @brief Sorts keys of a node
+void sortKeys(Node *node)
 {
-    //i = indexposition des letzten vorhandenen Schlüssels im Knoten
-    int i = node->num_keys - 1;
+    int keyListLength = node -> num_keys;
+    int *keys = node -> key;
 
-    //durchlaufe Knoten rückwärts und vergleicht einzufügenden Schlüssel mit vorhandenen Schlüssel
-    while (i >= 0 && node->key[i] > key)
+    for(int rounds = 0; rounds < keyListLength && keyListLength > 1; rounds++)
     {
-        //Schiebe aktuellen schlüssel ein nach rechts, um platz für neuen Schlüssel zu machen
-        node->key[i + 1] = node->key[i];
-        i--;
-    }
-
-    //Setze neuen Schlüssel an richtiger Stelle
-    node->key[i + 1] = key;
-    node->num_keys++;
-}
-
-/// @brief Teilt einen Knoten auf in zwei,
-///        damit jeder nur maximal 3 Schlüssel enthält.
-///        Geht dann rekursiv nach oben im Baum und wiederholt dies
-///        für alle weiteren Knoten,
-///        wo dies zutrifft.
-void splitNode(Node *node, Node **root) {
-    // Erstellen neuer Knoten für die rechte Hälfte
-    Node *newNode = createNode();
-    newNode->key[0] = node->key[2];
-    newNode->key[1] = node->key[3];
-    newNode->num_keys = 2;
-
-    // Kopieren der rechten Hälfte der Kinder, falls vorhanden
-    if (node->children[2] != NULL && node->children[3] != NULL) {
-        newNode->children[0] = node->children[2];
-        newNode->children[1] = node->children[3];
-        newNode->children[2] = node->children[4];
-        newNode->children[0]->parent = newNode;
-        newNode->children[1]->parent = newNode;
-        newNode->children[2]->parent = newNode;
-    }
-
-    // Neuen linken Knoten erstellen
-    Node *newLeftNode = createNode();
-    newLeftNode->key[0] = node->key[0];
-    newLeftNode->num_keys = 1;
-
-    if(node->children[0] != NULL && node->children[1] != NULL) {
-        newLeftNode->children[0] = node->children[0];
-        newLeftNode->children[1] = node->children[1];
-        newLeftNode->children[0]->parent = newLeftNode;
-        newLeftNode->children[1]->parent = newLeftNode;
-    }
-
-    // Ursprungsknoten reduzieren
-    node->num_keys = 1;
-
-    // Wenn der Knoten keinen Elternknoten hat (Wurzel)
-    if (node->parent == NULL) {
-        // Neuen Elternknoten für die aufgeteilten Knoten erstellen
-        Node *newRoot = createNode();
-        insertKey(newRoot, node->key[1]); // Einfügen des mittleren Schlüssels als Wurzel
-
-        // Platzieren der neuen Kinder im neuen Wurzelknoten
-        newRoot->children[0] = newLeftNode;
-        newRoot->children[1] = newNode;
-        newLeftNode->parent = newRoot;
-        newNode->parent = newRoot;
-
-        *root = newRoot; // Aktualisieren der Wurzel
-    } else {
-        Node *parent = node->parent;
-        int middleKey = node->key[1];
-
-        insertKey(parent, middleKey);
-
-        int i = parent->num_keys - 1;
-        while (i >= 0 && parent->key[i] > middleKey) {
-            parent->children[i + 1] = parent->children[i];
-            i--;
-        }
-
-        parent->children[i + 1] = newNode;
-        newNode->parent = parent;
-        parent->children[i] = newLeftNode;
-        newLeftNode->parent = parent;
-
-        // Falls Elternknoten ebenfalls ein 4-Knoten ist, wird er auch aufgeteilt
-        if (parent->num_keys > 3) {
-            splitNode(parent, root);
-        }
-    }
-}
-
-
-/// @brief Fügt einen Schlüssel in den 2-3-4-Baum ein
-///        und führt bei Bedarf auch eine Aufteilung (Split) durch,
-///        um die Baumstruktur aufrechtzuerhalten.
-/// @param root Baum-Wurzel
-/// @param key Schlüssel zum Einfügen
-void insert2(Node **root, int key)
-{
-    Node *current = *root;
-
-    while(1)
-    {
-        //wenn knoten = blattknoten
-        if(current->children[0] == NULL)
+        for(int index = 0; index < (keyListLength - 1); index++)
         {
-
-            insertKey(current, key);
-
-            //check ob knoten mehr als 3 key hat
-            if(current->num_keys > 3)
+            // Swap the values if one is bigger.
+            if(keys[index] > keys[index + 1])
             {
-                //teile Knoten auf
-                split(current);
-            }
+                int temp = keys[index + 1];
 
-            break;
+                keys[index + 1] = keys[index];
+
+                keys[index] = temp;
+            }
+        }
+    }
+}
+
+/// @brief Make sure it is a 4-Node node, so with 3 keys!
+void keysToNewChildren(Node *newLeftChild, Node *newRightChild, Node *parentNode)
+{
+    int middleKey = parentNode -> key[1];
+
+    for(int i = 0; i < parentNode -> num_keys; i++)
+    {
+        // Skip middle key
+        if(i == 1)
+        {
+            continue;
+        }
+
+        int insertableKey = parentNode -> key[i];
+
+        if(insertableKey < middleKey)
+        {
+            newLeftChild -> key[newLeftChild -> num_keys] = insertableKey;
+            newLeftChild -> num_keys++;
         }
         else
         {
-            //wenn knoten kein Blattknoten, gehe in passenden Kindknoten runter
-            //wenn current_key kleiner als key, gehe in Kindknoten + 1
-            int i = current->num_keys - 1;
-
-            while(i >= 0 && key < current->key[i])
-            {
-                i--;
-            }
-
-            current = current->children[i + 1];
+            newRightChild -> key[newRightChild -> num_keys] = insertableKey;
+            newRightChild -> num_keys++;
         }
     }
+
+    sortKeys(newLeftChild);
+    sortKeys(newRightChild);
+}
+
+int hasNoChildren(Node *node)
+{
+    return    node -> children[0] == NULL
+              && node -> children[1] == NULL
+              && node -> children[2] == NULL
+              && node -> children[3] == NULL;
+}
+
+int splitIfNeeded(Node *node)
+{
+    if(isNodeFull(node))
+    {
+        Node *parent = node;
+
+        if(hasNoChildren(parent))
+        {
+            Node *newLeftChild = createNode();
+            Node *newRightChild = createNode();
+
+            keysToNewChildren(newLeftChild, newRightChild, parent);
+
+            parent -> children[0] = newLeftChild;
+            parent -> children[1] = newRightChild;
+
+            newLeftChild -> parent = parent;
+            newRightChild -> parent = parent;
+
+            // Delete children keys from parent
+            parent -> key[0] = parent -> key[1]; // middle key on first place now
+            parent -> key[1] = 0;
+            parent -> key[2] = 0;
+            parent -> key[3] = 0;
+            parent -> num_keys = 1;
+
+            return parent -> key[0]; // Middle key used to split
+        }
+    }
+
+    return INT_MIN; // No split applied
+}
+
+void insertInternally(Node *node, int key)
+{
+    node -> key[node -> num_keys] = key;
+    node -> num_keys++;
+
+    sortKeys(node);
+}
+
+void insertAtNode(Node *node, int key)
+{
+    int splitValue = INT_MIN;
+
+    splitValue = splitIfNeeded(node);
+
+    if(splitValue > INT_MIN) // it was splitted
+    {
+        // Now the "node" can be regarded as the "parent"
+        // because split will make "node" the highest node.
+        Node *parent = node;
+
+        if(key < splitValue)
+        {
+            insertInternally(parent -> children[0], key);
+        }
+        else
+        {
+            insertInternally(parent -> children[1], key);
+        }
+    }
+    else // Normal insertion to the key array
+    {
+        insertInternally(node, key);
+    }
+}
+
+void insert(Node **root, int key)
+{
+    insertAtNode(*root, key);
 }
 
 int maxDepth(struct Node* root)
