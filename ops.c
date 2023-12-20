@@ -136,6 +136,24 @@ void insertInternally(Node *node, int key)
     sortKeys(node);
 }
 
+Node* findLeafForKey(Node *node, int key)
+{
+    if(hasNoChildren(node))
+    {
+        // Leaf found.
+        return node;
+    }
+
+    if(key < node -> key[0])
+    {
+        // take left node
+        return findLeafForKey(node -> children[0], key);
+    }
+
+    // take right node
+    return findLeafForKey(node -> children[1], key);
+}
+
 void insertAtNode(Node *node, int key)
 {
     int splitValue = INT_MIN;
@@ -157,9 +175,11 @@ void insertAtNode(Node *node, int key)
             insertInternally(parent -> children[1], key);
         }
     }
-    else // Normal insertion to the key array
+    else // Normal insertion to the key array but first traverse to the required node
     {
-        insertInternally(node, key);
+        Node *leaf = findLeafForKey(node, key);
+
+        insertInternally(leaf, key);
     }
 }
 
